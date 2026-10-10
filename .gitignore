@@ -1,0 +1,6 @@
+/out/
+/.repo/
+__pycache__/
+*.log
+*.img
+*.zip

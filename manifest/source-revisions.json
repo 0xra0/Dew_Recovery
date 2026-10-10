@@ -1,0 +1,9 @@
+{
+  ".repo/manifests": "49f2d6950edd2dc87c213636a8a680ca5c97e52c",
+  "build/make": "506df226dd003a364916b6b3ee1eb3bf9064f97f",
+  "bootable/recovery": "7280e7204e2acdd8133c5485a15cfa05a4feb34d",
+  "vendor/recovery": "2c20a4a80fdd63c5da53085f1a28cf8499102090",
+  "vendor/twrp": "c699fc6adfdeea786fd63626d8232a0f63dcc039",
+  "system/vold": "b865130d263a84d86440f6b8b9e1f08c6938d6a5",
+  "device/xiaomi/dew": "5476b2bfa2b266f46b59fe4eb7e2302b59b657ef"
+}
