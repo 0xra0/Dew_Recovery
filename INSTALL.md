@@ -8,11 +8,12 @@ firmware at hand. A flash always carries a boot-loop risk.
 
 Download `OrangeFox-dew-minimal-r2-EXPERIMENTAL-vendor_boot.img` from the
 [r2 release](https://github.com/0xra0/Dew_Recovery/releases/tag/r2-20261010).
-Verify its SHA-256 before flashing:
+Verify its SHA-256 before flashing (the command must report `OK`):
 
 ```sh
-sha256sum OrangeFox-dew-minimal-r2-EXPERIMENTAL-vendor_boot.img
-# Expected: 5930b9cdb30d790cb57a66cee3770c51721f7eaf1d99bca98f990f8c4b564aae
+printf '%s  %s\n' \
+  5930b9cdb30d790cb57a66cee3770c51721f7eaf1d99bca98f990f8c4b564aae \
+  OrangeFox-dew-minimal-r2-EXPERIMENTAL-vendor_boot.img | sha256sum -c -
 ```
 
 Extract the stock image from your **same** Xiaomi EEA firmware package. On
@@ -20,18 +21,32 @@ the local build host it is at
 `/mnt/sata/dew_eea_global_images_OS3.0.301.0.WBNEUXM_16.0/images/vendor_boot.img`.
 Its expected SHA-256 is
 `9eca718c5647fc522bd0276c81de780ccb3c3bed4bc9783895a835483263bf5a`.
-Do not use an image from another firmware or device.
+Put your extracted image beside the recovery download as `vendor_boot.img` and
+check it before proceeding:
+
+```sh
+printf '%s  %s\n' \
+  9eca718c5647fc522bd0276c81de780ccb3c3bed4bc9783895a835483263bf5a \
+  vendor_boot.img | sha256sum -c -
+```
+
+Do not use an image from another firmware or device. The `/mnt/sata` path above
+only identifies the tested build host's copy; you do not need that path.
 
 Boot Android normally first, enable USB debugging, and enter bootloader mode:
 
 ```sh
+adb shell getprop ro.product.vendor.device
+adb shell getprop ro.vendor.build.fingerprint
 adb reboot bootloader
 fastboot devices
 fastboot getvar current-slot
 fastboot getvar is-userspace
 ```
 
-Proceed only when the slot is `a` and `is-userspace` is `no`. Do **not** reboot
+Confirm the vendor device is `dew` and the fingerprint identifies the unchanged
+`OS3.0.301.0.WBNEUXM` vendor. Proceed only when the slot is `a` and
+`is-userspace` is `no`. Do **not** reboot
 to fastbootd. Flash the recovery to slot A's `vendor_boot`, then boot Android
 and enter recovery:
 
